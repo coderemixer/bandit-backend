@@ -14,16 +14,7 @@ class Route < Sinatra::Base
 
   namespace '/', &ROOT_ROUTE
 
-  # [
-  #   401,
-  #   {
-  #     exception: error.class,
-  #     message: error.message,
-  #     backtrace: error.backtrace,
-  #   }.to_json
-  # ]
-
-  error 500, proc do |error|
+  error 500 do |error|
     [
       500,
       {
@@ -34,7 +25,7 @@ class Route < Sinatra::Base
     ]
   end
 
-  error BaseError, proc do |error|
+  error BaseError do |error|
     error.rack
   end
 end

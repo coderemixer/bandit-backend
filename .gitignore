@@ -24,3 +24,6 @@
 /vendor/*
 /coverage/*
 dump.rdb
+
+/.pids/*
+!/.pids/.gitkeep

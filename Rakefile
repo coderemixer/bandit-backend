@@ -5,13 +5,16 @@ namespace :run do
     sh 'rackup'
   end
 
-  task :daemon do
+  task :prod do
+    sh 'pumactl -F puma.rb'
   end
 
   task :stop do
+    sh 'pumactl -F puma.rb -S .pids/pte.state -P .pids/pte.pid stop'
   end
 
   task :restart do
+    sh 'pumactl -F puma.rb -S .pids/pte.state -P .pids/pte.pid restart'
   end
 end
 

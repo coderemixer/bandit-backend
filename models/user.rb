@@ -23,7 +23,7 @@ class User < Sequel::Model
     raise(UnauthorizedError.new('Password Incorrect')) unless CryptoService.verify(password, user.password)
     token = SecureRandom.uuid62
     Token.create(token: token, user_id: user.id)
-    user, token
+    return user, token
   end
 
   def self.auth(request)
