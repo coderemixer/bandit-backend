@@ -18,4 +18,5 @@ gem 'sqlite3', '~> 1.3'
 gem 'ohm'
 
 # Gems for misc
+gem 'yajl-ruby', require: 'yajl'
 gem 'uuid64'

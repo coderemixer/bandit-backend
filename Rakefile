@@ -37,7 +37,7 @@ namespace :db do
     Rake::Task['db:version'].execute
   end
 
-  task :rollback do
+  task :rollback do |_t, args|
     args.with_defaults(:target => 0)
 
     Sequel::Migrator.run(DB, 'migrations', :target => args[:target].to_i)

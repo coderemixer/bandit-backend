@@ -1,0 +1,5 @@
+json = {
+  id: user.id,
+  nickname: user.nickname,
+  is_admin: user.admin?,
+}

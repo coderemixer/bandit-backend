@@ -1,5 +1,5 @@
 ROOT_ROUTE = proc do
   get '' do
-    'Hello World'
+    yajl :root
   end
 end

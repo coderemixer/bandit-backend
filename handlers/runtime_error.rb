@@ -6,8 +6,8 @@ class BaseError < RuntimeError
 
   def rack
     [
-      code,
-      message.to_json,
+      @code,
+      @message.to_json,
     ]
   end
 end

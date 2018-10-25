@@ -1,5 +1,5 @@
 class User < Sequel::Model
-  plugin :timestamps, create: :created_time
+  plugin :timestamps, update_on_create: true
 
   def admin?
     self.is_admin
@@ -17,8 +17,8 @@ class User < Sequel::Model
     raise UnauthorizedError.new('User NOT Allowed') unless own?(user)
   end
 
-  def self.login(email, password)
-    user = User.where(email: email)&.first
+  def self.login(username, password)
+    user = User.where(username: username)&.first
     raise(UnauthorizedError.new('User Not Exsited')) if user.nil?
     raise(UnauthorizedError.new('Password Incorrect')) unless CryptoService.verify(password, user.password)
     token = SecureRandom.uuid62

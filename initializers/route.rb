@@ -1,5 +1,6 @@
 class Route < Sinatra::Base
   set :show_exceptions, :after_handler
+  set :views, settings.root + '/../views'
   register Sinatra::Namespace
   use Rack::Cors do
     allow do
@@ -13,6 +14,7 @@ class Route < Sinatra::Base
   end
 
   namespace '/', &ROOT_ROUTE
+  namespace '/users', &USER_ROUTE
 
   error 500 do |error|
     [

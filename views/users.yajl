@@ -1,0 +1,13 @@
+json = {
+  count: count,
+  page: page,
+  size: size,
+  users: users.map do |user|
+    {
+      id: user.id,
+      username: user.username,
+      nickname: user.nickname,
+      is_admin: user.admin?,
+    }
+  end
+}

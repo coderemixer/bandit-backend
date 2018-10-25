@@ -1,0 +1,8 @@
+json = {
+  token: token,
+  user: {
+    id: user.id,
+    username: user.username,
+    is_admin: user.admin?,
+  },
+}
