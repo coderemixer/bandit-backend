@@ -14,7 +14,9 @@ class Route < Sinatra::Base
   end
 
   namespace '/', &ROOT_ROUTE
-  namespace '/users', &USER_ROUTE
+  namespace '/cards', &USER_ROUTE
+  namespace '/projects', &PROJECT_ROUTE
+  # namespace '/users', &CARD_ROUTE
 
   error 500 do |error|
     [

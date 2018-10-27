@@ -23,14 +23,14 @@ USER_ROUTE = proc do
   # Get all users
   get '' do
     User.auth!(request).admin! 
-    @page = (params[:page] || 1).to_i
-    @size = (params[:size] || 10).to_i
+    page = (params[:page] || 1).to_i
+    size = (params[:size] || 10).to_i
 
     yajl :users, locals: {
       count: User.count,
-      page: @page,
-      size: @size,
-      users: User.dataset.paginate(@page, @size),
+      page: page,
+      size: size,
+      users: User.dataset.paginate(page, size),
     }
   end
 
@@ -56,5 +56,37 @@ USER_ROUTE = proc do
     entity.save
 
     yajl :profile, locals: { user: entity }
+  end
+
+  get '/:id/projects' do |id|
+    user = User.auth!(request)
+    entity = User.where(id: id)&.first
+    raise NotFoundError.new("User: #{id}", 'User Not Existed') if user.nil?
+    sql = entity.projects_dataset
+    sql = sql.where(is_public: true) unless user.own?(entity)
+
+    page = (params[:page] || 1).to_i
+    size = (params[:size] || 10).to_i
+    yajl :projects, locals: {
+      count: sql.count,
+      page: page,
+      size: size,
+      projects: sql.paginate(page, size),
+    }
+  end
+
+  # Create Project
+  post '/:id/projects' do |id|
+    user = User.auth!(request)
+    entity = User.where(id: id)&.first
+    raise NotFoundError.new("User: #{id}", 'User Not Existed') if user.nil?
+    req = JSON.parse(request.body.read)
+    project = Project.create(
+      name: req['name'],
+      description: req['description'],
+      is_public: req['is_public'],
+      user: entity,
+    )
+    yajl :project, locals: { project: project }
   end
 end

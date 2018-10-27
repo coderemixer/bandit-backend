@@ -1,0 +1,20 @@
+json = {
+  count: count,
+  page: page,
+  size: size,
+  projects: projects.map do |project|
+    {
+      id: project.id,
+      name: project.name,
+      description: project.description,
+      is_public: project.is_public,
+      created_at: project.created_at,
+      updated_at: project.updated_at,
+      count: project.cards.count,
+      owner: {
+        id: project.user.id,
+        nickname: project.user.nickname,
+      },
+    }
+  end
+}
