@@ -1,1 +1,26 @@
-json = {}
+json = {
+  id: project.id,
+  name: project.name,
+  description: project.description,
+  is_public: project.is_public,
+  created_at: project.created_at,
+  updated_at: project.updated_at,
+  count: project.cards_dataset.count,
+  page: page,
+  size: size,
+  owner: {
+    id: project.user.id,
+    nickname: project.user.nickname,
+  },
+  cards: project.cards_dataset.paginate(page, size).map do |card|
+    {
+      id: card.id,
+      question: card.question,
+      answer: card.answer,
+      attempts: card.attempts,
+      failures: card.failures,
+      created_at: card.created_at,
+      updated_at: card.updated_at,
+    }
+  end
+}

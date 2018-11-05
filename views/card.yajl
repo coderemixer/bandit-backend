@@ -1,0 +1,9 @@
+json = {
+  id: card.id,
+  question: card.question,
+  answer: card.answer,
+  attempts: card.attempts,
+  failures: card.failures,
+  created_at: card.created_at,
+  updated_at: card.updated_at,
+}

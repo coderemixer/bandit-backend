@@ -16,9 +16,9 @@ PROJECT_ROUTE = proc do
   # Get Project Cards By Id
   get '/:id' do |id|
     project = Project.where(id: id)&.first
-    raise NotFoundError.new("User: #{id}", 'User Not Existed') if user.nil?
+    raise NotFoundError.new("Project: #{id}", 'Project Not Existed') if project.nil?
     raise UnauthorizedError.new('User NOT Allowed') unless project.is_public || User.auth(request)&.own?(project.user)
-    
+
     page = (params[:page] || 1).to_i
     size = (params[:size] || 10).to_i
     yajl :cards, locals: {
@@ -26,5 +26,28 @@ PROJECT_ROUTE = proc do
       size: size,
       project: project,
     }
+  end
+
+  # Create Card
+  post '/:id/cards' do |id|
+    project = Project.where(id: id)&.first
+    raise UnauthorizedError.new('User NOT Allowed') unless User.auth!(request).own?(project.user)
+
+    req = JSON.parse(request.body.read)
+    card = Card.create(
+      question: req['question'],
+      answer: req['answer'],
+      project: project,
+    )
+
+    yajl :card, locals: { card: card }
+  end
+
+  # Challenge Card
+  get '/:id/challenge' do |id|
+    project = Project.where(id: id)&.first
+    raise NotFoundError.new("Project: #{id}", 'Project Not Existed') if project.nil?
+    raise UnauthorizedError.new('User NOT Allowed') unless User.auth(request)&.own?(project.user)
+    yajl :card, locals: { card: project.challenge }
   end
 end
