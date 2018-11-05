@@ -1,5 +1,9 @@
 require 'yaml'
 
+task :patch_sqlite do
+  `gcc -fPIC -shared ./db/extension-functions.c -o ./db/libsqlitefunctions.so -lm`
+end
+
 namespace :run do
   task :dev do
     sh 'rackup'
