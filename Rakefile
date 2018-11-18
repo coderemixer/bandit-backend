@@ -10,7 +10,7 @@ namespace :run do
   end
 
   task :prod do
-    sh 'puma -F puma.rb start'
+    sh 'pumactl -F puma.rb start'
   end
 
   task :stop do
