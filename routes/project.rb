@@ -28,6 +28,17 @@ PROJECT_ROUTE = proc do
     }
   end
 
+  # Delete Project
+  delete '/:id' do |id|
+    project = Project.where(id: id)&.first
+    raise NotFoundError.new("Project: #{id}", 'Project Not Existed') if project.nil?
+    raise UnauthorizedError.new('User NOT Allowed') unless User.auth(request)&.own?(project.user)
+    project.cards_dataset.delete
+    project.delete
+
+    yajl :empty
+  end
+
   # Create Card
   post '/:id/cards' do |id|
     project = Project.where(id: id)&.first

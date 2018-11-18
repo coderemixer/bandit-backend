@@ -14,7 +14,7 @@ class Project < Sequel::Model
     # Calculate UCB (Upper Confidence Bound)
     total_attempts = sql.sum(:attempts)
     sql.select_append {
-      (failures / attempts + (SQRT(2 * LOG(2.0, total_attempts) / attempts))).as(ucb)
+      (failures / attempts + (SQRT(2 * LOG(Math::E, total_attempts) / attempts))).as(ucb)
     }.order(Sequel.desc(:ucb)).first
   end
 end
