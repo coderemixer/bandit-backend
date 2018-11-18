@@ -13,7 +13,6 @@ gem 'puma'
 
 # Gems for database
 gem 'sequel', '~> 5.0'
-gem 'mysql2', '~> 0.4'
 gem 'sqlite3', '~> 1.3'
 gem 'ohm'
 
