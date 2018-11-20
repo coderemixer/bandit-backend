@@ -53,9 +53,4 @@ namespace :db do
     Sequel::Migrator.run(DB, 'migrations')
     Rake::Task['db:version'].execute
   end
-
-  task :seed do
-    require './server'
-    require './db/seed'
-  end
 end

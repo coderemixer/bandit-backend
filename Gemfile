@@ -12,6 +12,7 @@ gem 'rack-cors', '~> 0.4', require: 'rack/cors'
 gem 'puma'
 
 # Gems for database
+gem 'pg', '~>1.1'
 gem 'sequel', '~> 5.0'
 gem 'sqlite3', '~> 1.3'
 gem 'ohm'

@@ -27,3 +27,6 @@ dump.rdb
 
 /.pids/*
 !/.pids/.gitkeep
+
+/.persistence/*
+!/.persistenxe/.gitkeep

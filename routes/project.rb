@@ -28,6 +28,17 @@ PROJECT_ROUTE = proc do
     }
   end
 
+  # Switch Project Publication
+  put '/:id/public' do |id|
+    project = Project.where(id: id)&.first
+    raise NotFoundError.new("Project: #{id}", 'Project Not Existed') if project.nil?
+    raise UnauthorizedError.new('User NOT Allowed') unless User.auth(request)&.own?(project.user)
+    project.is_public = !project.is_public
+    project.save
+
+    yajl :empty
+  end
+
   # Delete Project
   delete '/:id' do |id|
     project = Project.where(id: id)&.first
