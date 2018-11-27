@@ -8,8 +8,8 @@ CARD_ROUTE = proc do
 
     # Edit
     req = JSON.parse(request.body.read)
-    card['question'] = req['question']
-    card['answer'] = req['answer']
+    card.question = req['question']
+    card.answer = req['answer']
     card.save
 
     yajl :card, locals: { card: card }
